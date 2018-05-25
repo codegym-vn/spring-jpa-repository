@@ -9,7 +9,17 @@
     <p>
         <a href="/create-user">Create user</a>
     </p>
-    <table>
+    <div>
+        <form method="get">
+            Search by first name:
+            <input name="s"/>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+    <p th:if="${s}">
+        Result for searching: <span th:text="${s.get()}"></span>
+    </p>
+    <table border="1">
         <tr>
             <th>First name</th>
             <th>Last name</th>
@@ -21,5 +31,10 @@
             <td th:text="${user.age}"></td>
         </tr>
     </table>
+    <div>
+        <a th:href="@{${'/users'}(page=${users.number - 1})}" th:if="${users.hasPrevious()}">Previous</a>
+        <span th:text="${users.number + 1}"></span>/<span th:text="${users.totalPages}"></span>
+        <a th:href="@{${'/users'}(page=${users.number + 1})}"  th:if="${users.hasNext()}">Next</a>
+    </div>
 </body>
 </html>
